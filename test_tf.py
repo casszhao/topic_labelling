@@ -141,13 +141,13 @@ Load needed files
 '''
 
 # loading X tokenizer
-with open('data/'+data_name+'/x_tokenizer.pickle', 'rb') as handle:
+with open('./data/'+data_name+'/x_tokenizer.pickle', 'rb') as handle:
     x_tokenizer= pickle.load(handle)
 print('number of x_tokenizer words --->', x_tokenizer.num_words)
 
 
 # loading Y tokenizer
-with open('data/'+data_name+'/y_tokenizer.pickle', 'rb') as handle:
+with open('./data/'+data_name+'/y_tokenizer.pickle', 'rb') as handle:
     y_tokenizer= pickle.load(handle)    
 print('number of y_tokenizer words --->', y_tokenizer.num_words)
 
@@ -170,12 +170,12 @@ max_summary_len=8  + 2
     
 if topic_data == False: # test on wiki data 
     print("load test data from", data_name)
-    x_test=np.load('data/'+data_name+'/x_test.npy')
-    y_test=np.load('data/'+data_name+'/y_test.npy')
+    x_test=np.load('./data/'+data_name+'/x_test.npy')
+    y_test=np.load('./data/'+data_name+'/y_test.npy')
     
 elif topic_data != False: # for inference on different data, load raw data and preprocess using the tokenizer of the data the model was trained on
     print("load test data from", topic_data)
-    data_test= pd.read_csv('data/'+topic_data+'/'+args.topic_evaluate+'.csv', names=['labels', 'terms'], header=None)
+    data_test= pd.read_csv('./data/'+topic_data+'/'+args.topic_evaluate+'.csv', names=['labels', 'terms'], header=None)
     print("first row, labels:", data_test.iloc[0], '\nterms:',data_test.iloc[0]['terms'])
     # process topic using specific tokenizer
     x_test, y_test = sup_methods.preprocess_using_tokenizer(data_test, x_tokenizer, y_tokenizer, max_text_len)  

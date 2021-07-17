@@ -17,6 +17,10 @@ import sys
 import time
 import numpy as np
 import random as rn
+
+import nltk
+nltk.download('stopwords')
+
 # set random seed for reproducibility
 rn.seed(1)
 np.random.seed(1)
@@ -180,7 +184,9 @@ embedding_dim=args.embed_dim
 BATCH_SIZE = args.batch_size
 
 ################
-if data_name == 'wiki_tfidf' or data_name == 'wiki_sent' or data_name == 'bhatia_topics_tfidf':
+print(data_name)
+
+if data_name == 'wiki_tfidf' or data_name == 'wiki_sent' or data_name == 'bhatia_topics_tfidf' or data_name == 'TroInequality':
     '''
     wiki data has 
             text with max length 30
@@ -188,8 +194,7 @@ if data_name == 'wiki_tfidf' or data_name == 'wiki_sent' or data_name == 'bhatia
     adding 2 to accommodate eostok and sostok
     '''
     max_text_len=30 + 2
-    max_summary_len=8  + 2 
-
+    max_summary_len=8  + 2
 
 
 elif data_name == 'bhatia_topics':
@@ -360,7 +365,7 @@ print('TRAIN: number of batches per epoch:', len([batch for (batch, (inp, targ))
 print('VAL: number of batches per epoch:', len([batch for (batch, (inp, targ)) in enumerate(dataset_val)]))
 
 
-''' starting training with early stopping '''
+'''  ========================== starting training with early stopping =================== '''
 best_loss= best_val_loss = 100
 require_improvment = 5 # early stopping patience 
 stop = False
